@@ -47,7 +47,7 @@ class _AddStudentState extends State<AddStudent> {
             alignment: Alignment.center,
             child: SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center, 
                 children: [
                   // height10,
                   InkWell(

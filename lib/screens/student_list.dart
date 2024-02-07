@@ -4,6 +4,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:student_management_app_final/model/model.dart';
+import 'package:student_management_app_final/screens/add_student.dart';
 import 'package:student_management_app_final/screens/edit_page.dart';
 import 'package:student_management_app_final/view_model/student_view_model.dart';
 
@@ -25,30 +27,80 @@ class _StudenntListState extends State<StudenntList> {
       ),
       body: GetBuilder<StudentViewMode>(
         builder: (controller) {
-          return Obx(
-            () => ListView.builder(
-              itemCount: controller.allstudent.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  child: ListTile(
-                    trailing:IconButton(onPressed: (){Get.to(EditStudent(name: controller.allstudent[index].name, domain: controller.allstudent[index].domain, batch: controller.allstudent[index].batch, image: controller.allstudent[index].image!, id: controller.allstudent[index].id!,));}, icon: Icon(Icons.edit)),
-                    leading: CircleAvatar(
-                        child: ClipOval(
-                            child: Image.file(
-                                File(controller.allstudent[index].image!)))),
-                    title: Text(controller.allstudent[index].name),
-                    // subtitle: Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     // Text(controller.allstudent[index].batch!),
-                    //     Text(controller.allstudent[index].domain)
-                    //   ],
-                    // ),
-                  ),
-                );
-              },
-            ),
-          );
+          return Obx(() => controller.allstudent.isNotEmpty
+              ? ListView.builder(
+                  itemCount: controller.allstudent.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: ListTile(
+                        leading: CircleAvatar(
+                            child: ClipOval(
+                                child: Image.file(File(
+                                    controller.allstudent[index].image!)))),
+                        title: Expanded(
+                            child: Text(controller.allstudent[index].name)),
+                        trailing: Container(
+                          width: 100,
+                          child: Row(
+                            children: [
+                              IconButton(
+                                  onPressed: () {
+                                    Get.to(EditStudent(
+                                      name: controller.allstudent[index].name,
+                                      domain:
+                                          controller.allstudent[index].domain,
+                                      batch: controller.allstudent[index].batch,
+                                      image:
+                                          controller.allstudent[index].image!,
+                                      id: controller.allstudent[index].id!,
+                                    ));
+                                  },
+                                  icon: Icon(Icons.edit)),
+                              IconButton(
+                                  onPressed: () {
+                                    Get.defaultDialog(
+                                      content: Text('Do you want to delete?'),
+                                      title: 'Delete',
+                                      onConfirm: () => studentViewModel
+                                          .deleteStudent(StudentModel(
+                                        name: controller.allstudent[index].name,
+                                        domain:
+                                            controller.allstudent[index].domain,
+                                        batch:
+                                            controller.allstudent[index].batch,
+                                        image:
+                                            controller.allstudent[index].image!,
+                                        id: controller.allstudent[index].id!,
+                                      )),textCancel: 'cancel'
+                                    );
+                                  },
+                                  icon: Icon(Icons.delete))
+                            ],
+                          ),
+                        ),
+                        // subtitle: Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     // Text(controller.allstudent[index].batch!),
+                        //     Text(controller.allstudent[index].domain)
+                        //   ],
+                        // ),
+                      ),
+                    );
+                  },
+                )
+              : Column(
+                  children: [
+                    Center(
+                      child: Text('No students registered'),
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          Get.to(AddStudent());
+                        },
+                        child: Text('Add Student'))
+                  ],
+                ));
         },
       ),
     );

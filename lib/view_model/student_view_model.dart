@@ -26,8 +26,8 @@ class StudentViewMode extends GetxController {
     studentRepository.update(studentModel);
     fetchAllStudent();
   }
-  // deleteStudent(StudentModel studentModel){
-  //   studentRepository.delete(studentModel.name);
+  deleteStudent(StudentModel studentModel){
+    studentRepository.delete(studentModel.name);
     
-  // }
+  }
 }

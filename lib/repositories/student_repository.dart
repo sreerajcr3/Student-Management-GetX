@@ -31,8 +31,8 @@ class StudentRepository {
         where: 'id=?', whereArgs: [studentModel.id]);
   }
 
-  // Future<int> delete(id) async {
-  //   var dbClient = await dbHelper.db;
-  //   return await dbClient.delete(tableName, where: 'id=?', whereArgs: [id]);
-  // }
+  Future<int> delete(id) async {
+    var dbClient = await dbHelper.db;
+    return await dbClient.delete(tableName, where: 'id=?', whereArgs: [id]);
+  }
 }
