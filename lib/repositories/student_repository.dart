@@ -8,7 +8,7 @@ class StudentRepository {
   Future<List<StudentModel>> getStudent() async {
     var dbClient = await dbHelper.db;
     List<Map<String, dynamic>> maps = await dbClient
-        .query(tableName, columns: ['id', 'name', 'domain', 'batch','image']);
+        .query(tableName, columns: ['id', 'name', 'domain', 'batch', 'image']);
     List<StudentModel> student = [];
 
     for (var i = 0; i < maps.length; i++) {
@@ -19,13 +19,13 @@ class StudentRepository {
     return student;
   }
 
-  Future<int> add( studentModel) async {
+  Future<int> add(studentModel) async {
     print("add worked");
     var dbClient = await dbHelper.db;
     return await dbClient.insert(tableName, studentModel.toMap());
   }
 
-  Future<int> update( studentModel) async {
+  Future<int> update(studentModel) async {
     var dbClient = await dbHelper.db;
     return await dbClient.update(tableName, studentModel.toMap(),
         where: 'id=?', whereArgs: [studentModel.id]);

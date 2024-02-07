@@ -15,19 +15,22 @@ class StudentViewMode extends GetxController {
   fetchAllStudent() async {
     var student = await studentRepository.getStudent();
     allstudent.value = student;
+  
   }
 
-  addStudent(StudentModel studentModel){
+  addStudent(StudentModel studentModel) {
     print("Add student worked");
     studentRepository.add(studentModel);
     fetchAllStudent();
   }
-  updateStudent(StudentModel studentModel){
+
+  updateStudent(StudentModel studentModel) {
     studentRepository.update(studentModel);
     fetchAllStudent();
   }
-  deleteStudent(StudentModel studentModel){
-    studentRepository.delete(studentModel.name);
-    
+
+  deleteStudent(int id) {
+    studentRepository.delete(id);
+    fetchAllStudent();
   }
 }

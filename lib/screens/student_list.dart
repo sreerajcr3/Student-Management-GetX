@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:student_management_app_final/model/model.dart';
 import 'package:student_management_app_final/screens/add_student.dart';
 import 'package:student_management_app_final/screens/edit_page.dart';
 import 'package:student_management_app_final/view_model/student_view_model.dart';
@@ -61,17 +60,11 @@ class _StudenntListState extends State<StudenntList> {
                                     Get.defaultDialog(
                                       content: Text('Do you want to delete?'),
                                       title: 'Delete',
-                                      onConfirm: () => studentViewModel
-                                          .deleteStudent(StudentModel(
-                                        name: controller.allstudent[index].name,
-                                        domain:
-                                            controller.allstudent[index].domain,
-                                        batch:
-                                            controller.allstudent[index].batch,
-                                        image:
-                                            controller.allstudent[index].image!,
-                                        id: controller.allstudent[index].id!,
-                                      )),textCancel: 'cancel'
+                                      onConfirm: () {
+                                        controller
+                                          .deleteStudent(controller.allstudent[index].id!,);
+                                      Get.back();
+                                      } ,textCancel: 'cancel'
                                     );
                                   },
                                   icon: Icon(Icons.delete))
@@ -90,6 +83,7 @@ class _StudenntListState extends State<StudenntList> {
                   },
                 )
               : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Center(
                       child: Text('No students registered'),
